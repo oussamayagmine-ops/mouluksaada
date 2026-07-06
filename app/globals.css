@@ -1,0 +1,183 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-display), 'Reem Kufi Fallback';
+  --font-sans: var(--font-body), 'Cairo Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand tokens */
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-bronze: var(--bronze);
+  --color-sandstone: var(--sandstone);
+  --color-midnight: var(--midnight);
+  --color-amber-glow: var(--amber-glow);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+}
+
+:root {
+  --background: oklch(0.07 0.005 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.11 0.005 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.09 0.005 0);
+  --primary: oklch(0.52 0.22 25);
+  --primary-foreground: oklch(0.97 0 0);
+  --secondary: oklch(0.15 0.005 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.14 0.005 0);
+  --muted-foreground: oklch(0.65 0.01 0);
+  --accent: oklch(0.52 0.22 25);
+  --accent-foreground: oklch(0.97 0 0);
+  --border: oklch(0.52 0.22 25 / 18%);
+  --input: oklch(0.52 0.22 25 / 22%);
+  --ring: oklch(0.52 0.22 25 / 55%);
+  --gold: oklch(0.52 0.22 25);
+  --gold-soft: oklch(0.65 0.18 25);
+  --amber-glow: oklch(0.42 0.2 20);
+  --bronze: oklch(0.4 0.15 20);
+  --sandstone: oklch(0.82 0.02 0);
+  --midnight: oklch(0.15 0.005 0);
+
+  --popover-foreground: oklch(0.97 0 0);
+  --destructive: oklch(0.6 0.2 25);
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), 'Reem Kufi Fallback';
+  }
+
+  /* Gold engraved text */
+  .text-gold-foil {
+    background: linear-gradient(
+      100deg,
+      oklch(0.4 0.22 25) 0%,
+      oklch(0.97 0 0) 35%,
+      oklch(0.52 0.22 25) 55%,
+      oklch(1 0 0) 70%,
+      oklch(0.45 0.22 25) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .shimmer-sweep {
+    background-size: 200% auto;
+    animation: shimmer 4s ease-in-out 0.6s 1 forwards;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% center;
+    }
+    100% {
+      background-position: -60% center;
+    }
+  }
+
+  /* Hieroglyphic / engraved faint pattern */
+  .engraved-pattern {
+    background-image: radial-gradient(
+        circle at 20% 30%,
+        oklch(0.8 0.14 80 / 6%) 0 2px,
+        transparent 2px
+      ),
+      linear-gradient(
+        90deg,
+        oklch(0.8 0.14 80 / 4%) 1px,
+        transparent 1px
+      );
+    background-size: 60px 60px, 30px 30px;
+  }
+
+  .gold-divider {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.8 0.14 80 / 70%),
+      transparent
+    );
+  }
+
+  .film-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.7;
+    }
+    70% {
+      transform: scale(1.7);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  .pulse-ring {
+    animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
