@@ -4,18 +4,12 @@ import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/lib/site'
 
 export function FloatingWhatsApp() {
   const { social } = useSiteData()
-  const number = social?.whatsapp || WHATSAPP_NUMBER
+  const number = (social?.whatsapp || WHATSAPP_NUMBER).replace(/\s/g, '')
   const message = social?.wa_message || WHATSAPP_MESSAGE
   const link = `https://wa.me/${number}?text=${encodeURIComponent(message)}`
 
   return (
-    <a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="اطلب عبر واتساب"
-      className="group fixed bottom-6 left-6 z-50"
-    >
+    <a href={link} target="_blank" rel="noopener noreferrer" aria-label="اطلب عبر واتساب" className="group fixed bottom-6 left-6 z-50">
       <span className="pulse-ring absolute inset-0 rounded-full bg-[#25D366]/60" />
       <span className="relative grid h-14 w-14 place-items-center rounded-full bg-[#25D366] shadow-[0_0_24px_-4px_rgba(37,211,102,0.8)] ring-2 ring-gold/40 transition-transform duration-300 group-hover:scale-110">
         <svg viewBox="0 0 24 24" className="h-7 w-7 fill-white" aria-hidden="true">
