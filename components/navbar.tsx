@@ -4,11 +4,17 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { Menu, ShoppingCart, X } from 'lucide-react'
-import { NAV_LINKS, WHATSAPP_LINK } from '@/lib/site'
+import { NAV_LINKS, WHATSAPP_LINK, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/lib/site'
+import { useSiteData } from '@/lib/firebase-client'
 import { useCart } from '@/lib/cart-context'
 import { CartDrawer } from '@/components/cart-drawer'
 
 export function Navbar() {
+  const { social, site_images } = useSiteData()
+  const logoSrc = site_images?.logo?.stored || '/images/logo.webp'
+  const waNumber = social?.whatsapp?.replace(/\s/g,'') || WHATSAPP_NUMBER
+  const waMessage = social?.wa_message || WHATSAPP_MESSAGE
+  const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
@@ -39,7 +45,7 @@ export function Navbar() {
         <a href="#hero" className="flex items-center gap-3" aria-label="ملوك السعادة المصري">
           <span className="relative h-12 w-12 overflow-hidden rounded-full ring-1 ring-gold/40 md:h-14 md:w-14">
             <Image
-              src="/images/logo.webp"
+              src={logoSrc}
               alt="شعار ملوك السعادة المصري"
               fill
               sizes="56px"
@@ -83,7 +89,7 @@ export function Navbar() {
           </button>
 
           <a
-            href={WHATSAPP_LINK}
+            href={waLink}
             target="_blank"
             rel="noopener noreferrer"
             className="hidden rounded-full bg-gradient-to-l from-amber-glow to-gold px-6 py-2.5 font-sans text-sm font-bold text-primary-foreground shadow-[0_0_24px_-4px_var(--gold)] transition-all hover:shadow-[0_0_36px_-2px_var(--gold)] hover:brightness-110 sm:block"
@@ -125,7 +131,7 @@ export function Navbar() {
             ))}
             <li>
               <a
-                href={WHATSAPP_LINK}
+                href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}

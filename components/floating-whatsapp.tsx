@@ -4,7 +4,7 @@ import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/lib/site'
 
 export function FloatingWhatsApp() {
   const { social } = useSiteData()
-  const number = (social?.whatsapp || WHATSAPP_NUMBER).replace(/\s/g, '')
+  const number = social?.whatsapp?.replace(/\s/g,'') || WHATSAPP_NUMBER
   const message = social?.wa_message || WHATSAPP_MESSAGE
   const link = `https://wa.me/${number}?text=${encodeURIComponent(message)}`
 

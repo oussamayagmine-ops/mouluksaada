@@ -3,10 +3,16 @@
 import Image from 'next/image'
 import { motion } from 'motion/react'
 import { GoldParticles } from './gold-particles'
-import { WHATSAPP_LINK } from '@/lib/site'
+import { WHATSAPP_LINK, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/lib/site'
+import { useSiteData } from '@/lib/firebase-client'
 import { ease } from '@/lib/motion'
 
 export function Hero() {
+  const { social, site_images } = useSiteData()
+  const waNumber = social?.whatsapp?.replace(/\s/g,'') || WHATSAPP_NUMBER
+  const waMessage = social?.wa_message || WHATSAPP_MESSAGE
+  const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
+  const heroImg = site_images?.hero?.stored || '/images/hero.webp'
   return (
     <section
       id="hero"
@@ -15,7 +21,7 @@ export function Hero() {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/hero.webp"
+          src={heroImg}
           alt="أجواء مطعم ملوك السعادة المصري"
           fill
           priority
@@ -67,7 +73,7 @@ export function Hero() {
           className="mt-11 flex flex-col items-center gap-4 sm:flex-row"
         >
           <a
-            href={WHATSAPP_LINK}
+            href={waLink}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative overflow-hidden rounded-full bg-gradient-to-l from-amber-glow to-gold px-9 py-4 font-sans text-base font-bold text-primary-foreground shadow-[0_0_30px_-6px_var(--gold)] transition-all hover:scale-[1.03] hover:shadow-[0_0_46px_-4px_var(--gold)]"
