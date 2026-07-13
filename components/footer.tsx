@@ -4,7 +4,7 @@ import { NAV_LINKS, WHATSAPP_LINK, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/l
 import { useSiteData } from '@/lib/firebase-client'
 
 export function Footer() {
-  const { social } = useSiteData()
+  const { social, site_images } = useSiteData()
   const waNumber = social?.whatsapp?.replace(/\s/g,'') || WHATSAPP_NUMBER
   const waMessage = social?.wa_message || WHATSAPP_MESSAGE
   const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
@@ -18,7 +18,7 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <span className="relative h-12 w-12 overflow-hidden rounded-full ring-1 ring-gold/40">
                 <Image
-                  src="/images/logo.webp"
+                  src={site_images?.["footer-logo"]?.stored || site_images?.logo?.stored || "/images/logo.webp"}
                   alt="شعار ملوك السعادة المصري"
                   fill
                   sizes="48px"
