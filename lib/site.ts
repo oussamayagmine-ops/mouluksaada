@@ -7,6 +7,4 @@ export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIC
 export const NAV_LINKS = [
   { label: 'الرئيسية', href: '#hero' },
   { label: 'المنيو', href: '#menu' },
-  { label: 'الحلويات', href: '#menu' },
-  { label: 'المشروبات', href: '#menu' },
 ]

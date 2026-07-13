@@ -1,8 +1,14 @@
 import Image from 'next/image'
 import { MessageCircle } from 'lucide-react'
-import { NAV_LINKS, WHATSAPP_LINK } from '@/lib/site'
+import { NAV_LINKS, WHATSAPP_LINK, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/lib/site'
+import { useSiteData } from '@/lib/firebase-client'
 
 export function Footer() {
+  const { social } = useSiteData()
+  const waNumber = social?.whatsapp?.replace(/\s/g,'') || WHATSAPP_NUMBER
+  const waMessage = social?.wa_message || WHATSAPP_MESSAGE
+  const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
+  const igUrl = social?.ig_url || social?.instagram ? `https://instagram.com/${social.instagram}` : 'https://instagram.com'
   return (
     <footer className="engraved-pattern relative border-t border-gold/25 bg-card/30 py-16">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
@@ -49,7 +55,7 @@ export function Footer() {
             <p className="font-display text-sm font-semibold text-gold">تابعنا</p>
             <div className="flex gap-3">
               <a
-                href="https://instagram.com"
+                href={igUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="إنستغرام"
@@ -71,7 +77,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href={WHATSAPP_LINK}
+                href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="واتساب"
