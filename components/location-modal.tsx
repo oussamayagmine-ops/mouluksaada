@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from 'motion/react'
 import { MapPin, X } from 'lucide-react'
 import { ease } from '@/lib/motion'
 import { useCart } from '@/lib/cart-context'
-import { WHATSAPP_NUMBER } from '@/lib/site'
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/lib/site'
+import { useSiteData } from '@/lib/firebase-client'
 
 type LocationModalProps = {
   open: boolean
@@ -22,6 +23,9 @@ const CATEGORY_LABELS: Record<string, string> = {
 const CATEGORY_ORDER = ['food', 'desserts', 'drinks'] as const
 
 export function LocationModal({ open, onClose }: LocationModalProps) {
+  const { social } = useSiteData()
+  const waNumber = social?.whatsapp?.replace(/\s/g,'') || WHATSAPP_NUMBER
+
   const { items, clearCart } = useCart()
   const [address, setAddress] = useState('')
   const [locating, setLocating] = useState(false)
@@ -54,7 +58,7 @@ export function LocationModal({ open, onClose }: LocationModalProps) {
   const sendOrder = (locationLine: string) => {
     const message = buildMessage(locationLine)
     window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`,
       '_blank',
     )
     clearCart()
